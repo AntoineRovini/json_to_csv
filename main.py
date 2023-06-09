@@ -1,14 +1,15 @@
 import csv
 import json
 
+with open('file') as file:
+    data = json.load(file)
 
-def csv_to_json(csv_file, json_file):
-    with open(csv_file, 'r') as file:
-        csv_data = csv.DictReader(file)
+response_data = data['response']
 
-        data_list = [row for row in csv_data]
-    with open(json_file, 'w') as file:
-        json.dump(data_list, file, indent=4)
+parameters = []
+for response_item in response_data:
+    parameters.append(list(response_item.values()))
 
-
-csv_to_json('C:\\Users\\antoi\\Documents\\code\\eNOVA\\flight_track\\al_test_format.json', 'output.json')
+with open('output.csv', 'w', newline='') as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerows(parameters)
